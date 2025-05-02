@@ -13,7 +13,8 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>13</version>
+            <version>24</version>
+            <classifier>mac-aarch64</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
