@@ -4,15 +4,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../css/estilos.css">
     <center>
-        <Canvas fx:id="lienzo" width="600" height="400" />
+        <Canvas fx:id="lienzo" width="600" height="400" styleClass="lienzo-juego" />
     </center>
     
     <right>
-        <VBox fx:id="panelInfo" spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
-            <Label fx:id="estadisticasJugador" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
-            <Label fx:id="ordenTurnos" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+        <VBox fx:id="panelInfo" spacing="10" styleClass="panel-info">
+            <Label fx:id="estadisticasJugador" styleClass="etiqueta-estadistica" />
+            <Label fx:id="ordenTurnos" styleClass="etiqueta-estadistica" />
         </VBox>
     </right>
 </BorderPane>
