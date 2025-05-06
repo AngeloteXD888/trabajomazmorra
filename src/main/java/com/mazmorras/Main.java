@@ -11,6 +11,7 @@ import com.mazmorras.vista.VistaJuego;
 import javafx.stage.Stage;
 
 public class Main {
+    
     private Stage escenarioPrincipal;
     
     public Main(Stage escenarioPrincipal) {

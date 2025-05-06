@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../css/estilos.css">
+    <center>
+        <Canvas fx:id="lienzo" width="600" height="400" styleClass="lienzo-juego" />
+    </center>
+    
+    <right>
+        <VBox fx:id="panelInfo" spacing="10" styleClass="panel-info">
+            <Label fx:id="estadisticasJugador" styleClass="etiqueta-estadistica" />
+            <Label fx:id="ordenTurnos" styleClass="etiqueta-estadistica" />
+        </VBox>
+    </right>
+</BorderPane>
