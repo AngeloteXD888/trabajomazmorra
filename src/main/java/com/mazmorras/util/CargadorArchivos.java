@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mazmorras.modelo.Casilla;
+import com.mazmorras.modelo.Enemigo;
+
 public class CargadorArchivos {
 
     /**
@@ -13,6 +16,7 @@ public class CargadorArchivos {
      * @param nombreArchivo Nombre del archivo dentro de la carpeta resources/mazmorra/mapas/
      * @return Matriz de Casillas que representa el mapa
      */
+    
     public static Casilla[][] cargarMapa(String nombreArchivo) {
         List<String> lineas = leerArchivo("resources/mazmorra/mapas/" + nombreArchivo);
         
