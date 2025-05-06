@@ -1,5 +1,4 @@
 package com.mazmorras.vista;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,11 +8,6 @@ import java.io.IOException;
 
 public class VistaCreacionJugador {
 
-    private static final TipoJugador GUERRERO = null;
-    private static final TipoJugador MAGO = null;
-    private static final TipoJugador ARQUERO = null;
-    private static final TipoJugador LADRON = null;
-    private static final TipoJugador PALADIN = null;
     private VBox raiz;
     private TextField campoNombre;
     private ComboBox<TipoJugador> comboTipo;
@@ -48,7 +42,7 @@ public class VistaCreacionJugador {
 
     private void configurarComponentes() {
         // Configurar ComboBox de tipos de jugador
-        comboTipo.getItems().setAll(TipoJugador.valores());
+        comboTipo.getItems().setAll(TipoJugador.values());
         comboTipo.getSelectionModel().selectFirst();
         comboTipo.valueProperty().addListener((obs, oldVal, newVal) -> {
             actualizarEstadisticasPorTipo(newVal);
@@ -160,8 +154,9 @@ public class VistaCreacionJugador {
     }
 
     public Scene getScene() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getScene'");
+        if (escena == null) {
+        }
+        return escena;
     }
 
 }

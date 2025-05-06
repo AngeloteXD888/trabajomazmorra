@@ -20,7 +20,7 @@ public class Main {
     
     public void mostrarCreacionJugador() {
         VistaCreacionJugador vistaCreacion = new VistaCreacionJugador();
-        new ControladorCreacionJugador();
+        new ControladorCreacionJugador(escenarioPrincipal);
         escenarioPrincipal.setScene(vistaCreacion.getScene());
         escenarioPrincipal.show();
     }

@@ -24,6 +24,7 @@ public class VistaJuego implements Observador {
     @FXML private VBox panelInfo;
     @FXML private Label estadisticasJugador;
     @FXML private Label ordenTurnos;
+    @FXML private Label mensajeLabel; // Nuevo Label para mensajes
     
     private Scene escena;
     
@@ -33,9 +34,22 @@ public class VistaJuego implements Observador {
             loader.setController(this);
             raiz = loader.load();
             escena = new Scene(raiz, 800, 500);
+            
+            // Inicializar el label de mensajes si no está en el FXML
+            if (mensajeLabel == null) {
+                mensajeLabel = new Label();
+                panelInfo.getChildren().add(mensajeLabel);
+            }
+            
         } catch (Exception e) {
             throw new RuntimeException("Error al inicializar VistaJuego", e);
         }
+    }
+
+    public Scene getScene() {
+        if (escena == null) {
+        }
+        return escena;
     }
     
     @Override
@@ -109,8 +123,31 @@ public class VistaJuego implements Observador {
         return lienzo;
     }
 
-    public Scene getScene() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getScene'");
+    public void mostrarMensaje(String mensaje) {
+        if (mensajeLabel != null) {
+            mensajeLabel.setText(mensaje);
+            mensajeLabel.setStyle("-fx-text-fill: black; -fx-font-weight: bold;");
+        }
     }
+    
+    public void limpiarMensaje() {
+        if (mensajeLabel != null) {
+            mensajeLabel.setText("");
+        }
+    }
+    
+    public void mostrarError(String mensaje) {
+        if (mensajeLabel != null) {
+            mensajeLabel.setText(mensaje);
+            mensajeLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+        }
+    }
+    
+    public void mostrarExito(String mensaje) {
+        if (mensajeLabel != null) {
+            mensajeLabel.setText(mensaje);
+            mensajeLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+        }
+    }
+        
 }

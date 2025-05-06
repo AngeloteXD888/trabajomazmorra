@@ -10,12 +10,6 @@ import com.mazmorras.modelo.Casilla;
 import com.mazmorras.modelo.Enemigo;
 
 public class CargadorArchivos {
-
-    /**
-     * Carga un mapa desde un archivo de texto
-     * @param nombreArchivo Nombre del archivo dentro de la carpeta resources/mazmorra/mapas/
-     * @return Matriz de Casillas que representa el mapa
-     */
     
     public static Casilla[][] cargarMapa(String nombreArchivo) {
         List<String> lineas = leerArchivo("resources/mazmorra/mapas/" + nombreArchivo);
@@ -56,11 +50,7 @@ public class CargadorArchivos {
         return mapa;
     }
 
-    /**
-     * Carga una lista de enemigos desde un archivo CSV
-     * @param nombreArchivo Nombre del archivo dentro de la carpeta resources/mazmorra/enemigos/
-     * @return Lista de enemigos cargados
-     */
+    
     public static List<Enemigo> cargarEnemigos(String nombreArchivo) {
         List<String> lineas = leerArchivo("resources/mazmorra/enemigos/" + nombreArchivo);
         List<Enemigo> enemigos = new ArrayList<>();
@@ -99,11 +89,6 @@ public class CargadorArchivos {
         return enemigos;
     }
 
-    /**
-     * Método auxiliar para leer todas las líneas de un archivo
-     * @param rutaCompleta Ruta completa del archivo a leer
-     * @return Lista de líneas del archivo o null si hay error
-     */
     private static List<String> leerArchivo(String rutaCompleta) {
         List<String> lineas = new ArrayList<>();
         
@@ -121,19 +106,12 @@ public class CargadorArchivos {
         return lineas;
     }
 
-    /**
-     * Método para validar la estructura básica de un archivo de mapa
-     * @param mapa Matriz de casillas a validar
-     * @return true si el mapa es válido, false si no
-     */
     public static boolean validarMapa(Casilla[][] mapa) {
         if (mapa == null || mapa.length == 0 || mapa[0].length == 0) {
             System.err.println("El mapa no puede estar vacío");
             return false;
         }
         
-        // Verificar que todas las filas tengan el mismo ancho
-        int ancho = mapa.length;
         for (Casilla[] columna : mapa) {
             if (columna == null || columna.length != mapa[0].length) {
                 System.err.println("El mapa no es uniforme");

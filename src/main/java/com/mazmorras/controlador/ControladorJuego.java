@@ -1,5 +1,6 @@
 package com.mazmorras.controlador;
 
+import com.mazmorras.modelo.Jugador;
 import com.mazmorras.modelo.ModeloJuego;
 import com.mazmorras.vista.VistaJuego;
 
@@ -9,10 +10,12 @@ import javafx.scene.input.KeyEvent;
 public class ControladorJuego {
     private ModeloJuego modelo;
     private VistaJuego vista;
+    private boolean juegoPausado;
     
     public ControladorJuego(ModeloJuego modelo, VistaJuego vista) {
         this.modelo = modelo;
         this.vista = vista;
+        this.juegoPausado = false;
         
         configurarManejadoresTeclado();
         modelo.agregarObservador(vista);
@@ -20,7 +23,14 @@ public class ControladorJuego {
     
     private void configurarManejadoresTeclado() {
         EventHandler<KeyEvent> manejadorTeclado = evento -> {
-            if (modelo.isJuegoTerminado()) {
+            if (modelo.isJuegoTerminado() || juegoPausado) {
+                if (evento.getCode() == javafx.scene.input.KeyCode.ESCAPE) {
+                    if (juegoPausado) {
+                        reanudarJuego();
+                    } else {
+                        pausarJuego();
+                    }
+                }
                 return;
             }
             
@@ -45,7 +55,7 @@ public class ControladorJuego {
                     // Acción adicional como usar habilidad especial
                     break;
                 case ESCAPE:
-                    // Pausar el juego
+                    pausarJuego();
                     break;
                 default:
                     break;
@@ -73,14 +83,21 @@ public class ControladorJuego {
         this.modelo = nuevoModelo;
         modelo.agregarObservador(vista);
         vista.limpiarMensaje();
+        this.juegoPausado = false;
     }
     
     // Métodos para pausar/reanudar el juego
     public void pausarJuego() {
-        // Lógica para pausar el juego
+        if (!modelo.isJuegoTerminado() && !juegoPausado) {
+            juegoPausado = true;
+            vista.mostrarMensaje("Juego Pausado");
+        }
     }
     
     public void reanudarJuego() {
-        // Lógica para reanudar el juego
+        if (juegoPausado) {
+            juegoPausado = false;
+            vista.limpiarMensaje();
+        }
     }
 }

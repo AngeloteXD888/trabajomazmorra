@@ -2,6 +2,7 @@ package com.mazmorras.controlador;
 
 import com.mazmorras.modelo.Jugador;
 import com.mazmorras.modelo.ModeloJuego;
+import com.mazmorras.vista.VistaCreacionJugador;
 import com.mazmorras.vista.VistaJuego;
 
 import javafx.stage.Stage;
@@ -16,7 +17,7 @@ public class ControladorPrincipal {
     
     public void mostrarCreacionJugador() {
         VistaCreacionJugador vistaCreacion = new VistaCreacionJugador();
-        new ControladorCreacionJugador();
+        new ControladorCreacionJugador(escenarioPrincipal);
         escenarioPrincipal.setScene(vistaCreacion.getEscena());
         escenarioPrincipal.show();
     }
@@ -24,7 +25,7 @@ public class ControladorPrincipal {
     public void iniciarJuego(Jugador jugador) {
         ModeloJuego modelo = new ModeloJuego("mapa1.txt", "enemigos1.txt", jugador);
         VistaJuego vistaJuego = new VistaJuego();
-        new ControladorJuego();
+        new ControladorJuego(modelo, vistaJuego);
         escenarioPrincipal.setScene(vistaJuego.getEscena());
     }
 }
