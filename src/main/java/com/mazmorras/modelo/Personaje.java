@@ -21,6 +21,9 @@ public abstract class Personaje {
         this.posicion = new Posicion(0, 0);
     }
     
+    public Personaje() {
+    }
+
     public boolean estaVivo() {
         return salud > 0;
     }

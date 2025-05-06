@@ -78,9 +78,8 @@ public class CargadorArchivos {
                 int ataque = Integer.parseInt(partes[2].trim());
                 int defensa = Integer.parseInt(partes[3].trim());
                 int velocidad = Integer.parseInt(partes[4].trim());
-                int percepcion = Integer.parseInt(partes[5].trim());
+                enemigos.add(new Enemigo(nombre, salud, ataque, defensa, velocidad));
                 
-                enemigos.add(new Enemigo(nombre, salud, ataque, defensa, velocidad, percepcion));
             } catch (NumberFormatException e) {
                 System.err.println("Error en línea " + (i + 1) + ": valor numérico inválido.");
             }
