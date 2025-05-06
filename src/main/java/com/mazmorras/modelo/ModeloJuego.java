@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.mazmorras.util.CargadorArchivos;
+import com.mazmorras.util.Observable;
 
 public class ModeloJuego extends Observable {
     private Casilla[][] mapa;
