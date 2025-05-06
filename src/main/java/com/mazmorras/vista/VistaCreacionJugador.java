@@ -159,4 +159,9 @@ public class VistaCreacionJugador {
         return botonIniciar;
     }
 
+    public Scene getScene() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getScene'");
+    }
+
 }

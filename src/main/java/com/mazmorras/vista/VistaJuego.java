@@ -34,7 +34,7 @@ public class VistaJuego implements Observador {
             raiz = loader.load();
             escena = new Scene(raiz, 800, 500);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error al inicializar VistaJuego", e);
         }
     }
     
@@ -107,5 +107,10 @@ public class VistaJuego implements Observador {
     
     public Canvas getLienzo() {
         return lienzo;
+    }
+
+    public Scene getScene() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getScene'");
     }
 }
