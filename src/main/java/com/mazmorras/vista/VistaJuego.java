@@ -108,4 +108,14 @@ public class VistaJuego implements Observador {
     public Canvas getLienzo() {
         return lienzo;
     }
+
+    public void limpiarMensaje() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'limpiarMensaje'");
+    }
+
+    public void mostrarMensaje(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarMensaje'");
+    }
 }

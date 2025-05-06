@@ -24,7 +24,7 @@ public class ControladorPrincipal {
     public void iniciarJuego(Jugador jugador) {
         ModeloJuego modelo = new ModeloJuego("mapa1.txt", "enemigos1.txt", jugador);
         VistaJuego vistaJuego = new VistaJuego();
-        new ControladorJuego();
+        new ControladorJuego(modelo, vistaJuego);
         escenarioPrincipal.setScene(vistaJuego.getEscena());
     }
 }
