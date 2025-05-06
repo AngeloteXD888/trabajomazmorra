@@ -14,22 +14,22 @@ public class VistaCreacionJugador {
     private static final TipoJugador ARQUERO = null;
     private static final TipoJugador LADRON = null;
     private static final TipoJugador PALADIN = null;
-    @FXML private VBox raiz;
-    @FXML private TextField campoNombre;
-    @FXML private ComboBox<TipoJugador> comboTipo;
-    @FXML private Slider sliderSalud;
-    @FXML private Slider sliderAtaque;
-    @FXML private Slider sliderDefensa;
-    @FXML private Slider sliderVelocidad;
-    @FXML private Slider sliderPercepcion;
-    @FXML private Label labelValorSalud;
-    @FXML private Label labelValorAtaque;
-    @FXML private Label labelValorDefensa;
-    @FXML private Label labelValorVelocidad;
-    @FXML private Label labelValorPercepcion;
-    @FXML private TextArea areaDescripcion;
-    @FXML private Button botonIniciar;
-    @FXML private Text textoError;
+    private VBox raiz;
+    private TextField campoNombre;
+    private ComboBox<TipoJugador> comboTipo;
+    private Slider sliderSalud;
+    private Slider sliderAtaque;
+    private Slider sliderDefensa;
+    private Slider sliderVelocidad;
+    private Slider sliderPercepcion;
+    private Label labelValorSalud;
+    private Label labelValorAtaque;
+    private Label labelValorDefensa;
+    private Label labelValorVelocidad;
+    private Label labelValorPercepcion;
+    private TextArea areaDescripcion;
+    private Button botonIniciar;
+    private Text textoError;
 
     private Scene escena;
 
