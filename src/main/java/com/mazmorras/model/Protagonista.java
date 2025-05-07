@@ -4,6 +4,7 @@ public class Protagonista extends Personaje {
     private String nombre;
     private int fuerza;
     private int saludMaxima;
+    private int vida;
 
     public Protagonista(String nombre, int salud, int velocidad, int fuerza) {
         this.nombre = nombre;
@@ -37,7 +38,7 @@ public class Protagonista extends Personaje {
     }
 
     @Override
-    protected void setPosicion(int nuevoX, int nuevoY) {
+    public void setPosicion(int nuevoX, int nuevoY) {
         this.x = nuevoX;
         this.y = nuevoY;
     }
@@ -49,5 +50,9 @@ public class Protagonista extends Personaje {
     @Override
     public String getNombre() {
         return nombre != null ? nombre : "Sin nombre";
+    }
+
+    public boolean estaMuerto() {
+        return this.vida <= 0;
     }
 }

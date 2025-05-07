@@ -1,14 +1,20 @@
 package com.mazmorras.controller;
 
 import com.mazmorras.model.*;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
-public class JuegoControlador {
+import java.io.IOException;
+
+public class JuegoControlador implements EscenarioObserver {
     private Escenario modelo;
     private GestorTurnos gestorTurnos;
     private Protagonista protagonista;
@@ -24,6 +30,9 @@ public class JuegoControlador {
         this.protagonista = modelo.getProtagonista();
         this.gestorTurnos = new GestorTurnos();
         this.gestorTurnos.agregarPersonajes(modelo.getTodosPersonajes());
+        
+        // Registrar este controlador como observador del escenario
+        // (Requiere implementar un método para agregar observadores en la clase Escenario)
         
         inicializarVista();
         configurarEventosTeclado();
@@ -44,12 +53,13 @@ public class JuegoControlador {
 
     private Text crearRepresentacionCelda(Celda celda) {
         Text texto = new Text();
+        texto.setStyle("-fx-font-family: monospace; -fx-font-size: 20px;");
         
         if (celda.esPared()) {
-            texto.setText("#");
+            texto.setText("█"); // Unicode block character
             texto.setFill(Color.DARKGRAY);
         } else {
-            texto.setText(".");
+            texto.setText("·");
             texto.setFill(Color.LIGHTGRAY);
             
             if (celda.tienePersonaje()) {
@@ -70,6 +80,7 @@ public class JuegoControlador {
     private void configurarEventosTeclado() {
         gridTablero.setOnKeyPressed(this::manejarTeclaPresionada);
         gridTablero.setFocusTraversable(true);
+        gridTablero.requestFocus(); // Importante para capturar eventos de teclado
     }
 
     private void manejarTeclaPresionada(KeyEvent event) {
@@ -97,22 +108,63 @@ public class JuegoControlador {
         actualizarEstadisticas();
         
         // Turno de los enemigos
-        if (gestorTurnos.getTurnoActual() instanceof Enemigo) {
+        while (gestorTurnos.getTurnoActual() instanceof Enemigo) {
             Enemigo enemigo = (Enemigo) gestorTurnos.getTurnoActual();
             enemigo.ejecutarTurno(modelo);
             actualizarVista();
             gestorTurnos.siguienteTurno();
+            actualizarEstadisticas();
+        }
+        
+        // Verificar fin del juego
+        if (gestorTurnos.isJuegoTerminado()) {
+            mostrarFinJuego();
         }
     }
 
+    private void mostrarFinJuego() {
+        // Implementar lógica para mostrar pantalla de fin de juego
+        System.out.println("¡Juego terminado!");
+    }
+
     private void actualizarVista() {
-        inicializarVista(); // Redibuja todo (simple pero ineficiente para mapas grandes)
+        inicializarVista(); // Redibuja todo el tablero
     }
 
     private void actualizarEstadisticas() {
-        txtEstadisticas.setText(
-            "Salud: " + protagonista.getSalud() + "\n" +
-            "Turno: " + gestorTurnos.getTurnoActual().getNombre()
-        );
+        if (protagonista != null) {
+            txtEstadisticas.setText(
+                "Nombre: " + protagonista.getNombre() + " | " +
+                protagonista.getSalud() + " | " +
+                "Turno actual: " + gestorTurnos.getTurnoActual().getNombre()
+            );
+        }
+    }
+    
+    @FXML
+    private void reiniciarJuego() {
+        // Volver a la pantalla de creación de personaje
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/mazmorras/view/CreacionProtagonistaView.fxml")
+            );
+            Scene scene = new Scene(loader.load(), 800, 600);
+            Stage stage = (Stage) gridTablero.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Juego de Mazmorras");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    private void salirJuego() {
+        Platform.exit();
+    }
+
+    @Override
+    public void onEscenarioCambiado(Escenario escenario) {
+        // Actualizar vista cuando el escenario cambia
+        Platform.runLater(this::actualizarVista);
     }
 }
