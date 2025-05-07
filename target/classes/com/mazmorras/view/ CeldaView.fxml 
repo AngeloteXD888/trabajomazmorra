@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" 
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="10" 
+      alignment="CENTER"
+      styleClass="root"
+      stylesheets="@../../styles/styles.css">
+    
+    <Label text="Formulario de Persona" styleClass="titulo"/>
+    
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT"/>
+            <ColumnConstraints/>
+        </columnConstraints>
+        
+        <children>
+            <Label text="Nombre:" GridPane.rowIndex="0"/>
+            <TextField fx:id="nombreField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Edad:" GridPane.rowIndex="1"/>
+            <TextField fx:id="edadField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Email:" GridPane.rowIndex="2"/>
+            <TextField fx:id="emailField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        </children>
+    </GridPane>
+    
+    <Button fx:id="enviarButton" text="Enviar" onAction="#handleEnviar"/>
+
+</VBox>
