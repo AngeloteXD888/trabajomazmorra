@@ -5,24 +5,35 @@
 <?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="controller.CreacionProtagonistaController" 
+      fx:controller="com.mazmorras.controller.CreacionProtagonistaController"
       spacing="20" alignment="CENTER" 
       style="-fx-background-color: #2b2b2b; -fx-padding: 30;">
 
-    <Text text="Crear Personaje" fill="WHITE" font="20pt Arial Bold"/>
+    <!-- Título principal con fuente simplificada -->
+    <Text text="Crear Personaje" fill="WHITE">
+        <font>
+            <Font name="Arial" size="20" />
+        </font>
+        <style>-fx-font-weight: bold;</style>
+    </Text>
 
+    <!-- Formulario de creación -->
     <GridPane hgap="10" vgap="10" alignment="CENTER">
         <Label text="Nombre:" textFill="WHITE" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="nombreField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <TextField fx:id="nombreField" promptText="Ingrese nombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <Label text="Salud:" textFill="WHITE" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="saludField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Salud inicial:" textFill="WHITE" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="saludField" promptText="50-100" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
         <Label text="Fuerza:" textFill="WHITE" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="fuerzaField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <TextField fx:id="fuerzaField" promptText="5-20" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Velocidad:" textFill="WHITE" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="velocidadField" promptText="1-10" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
     </GridPane>
 
     <Button text="Comenzar Aventura" 
             onAction="#crearProtagonista" 
-            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;"
+            minWidth="200"/>
 </VBox>
