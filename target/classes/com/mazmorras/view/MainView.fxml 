@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="controller.MainController" 
+            stylesheets="@../resources/styles.css">
+
+    <!-- Top: Barra de estadísticas -->
+    <top>
+        <HBox style="-fx-background-color: #333; -fx-padding: 10;" spacing="20">
+            <VBox spacing="5">
+                <Text text="Protagonista:" fill="WHITE" font="14pt Arial Bold"/>
+                <Label fx:id="lblNombre" textFill="WHITE"/>
+                <Label fx:id="lblSalud" textFill="WHITE"/>
+                <Label fx:id="lblFuerza" textFill="WHITE"/>
+            </VBox>
+
+            <VBox spacing="5">
+                <Text text="Turno Actual:" fill="WHITE" font="14pt Arial Bold"/>
+                <Label fx:id="lblTurno" textFill="WHITE"/>
+            </VBox>
+        </HBox>
+    </top>
+
+    <!-- Center: Tablero de juego -->
+    <center>
+        <GridPane fx:id="tablero" alignment="CENTER" gridLinesVisible="true">
+            <!-- Las celdas se generarán dinámicamente desde el controlador -->
+        </GridPane>
+    </center>
+
+    <!-- Bottom: Controles -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" style="-fx-background-color: #444; -fx-padding: 10;">
+            <Button text="Reiniciar" onAction="#reiniciarJuego"/>
+            <Button text="Salir" onAction="#salirJuego"/>
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="controller.CreacionProtagonistaController" 
+      spacing="20" alignment="CENTER" 
+      style="-fx-background-color: #2b2b2b; -fx-padding: 30;">
+
+    <Text text="Crear Personaje" fill="WHITE" font="20pt Arial Bold"/>
+
+    <GridPane hgap="10" vgap="10" alignment="CENTER">
+        <Label text="Nombre:" textFill="WHITE" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="nombreField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Salud:" textFill="WHITE" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="saludField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Fuerza:" textFill="WHITE" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="fuerzaField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <Button text="Comenzar Aventura" 
+            onAction="#crearProtagonista" 
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+</VBox>
