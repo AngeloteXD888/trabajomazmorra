@@ -1,0 +1,14 @@
+com/mazmorras/model/Enemigo.class
+com/mazmorras/model/Protagonista.class
+com/mazmorras/model/Mapa.class
+com/mazmorras/controller/CreacionProtagonistaController.class
+com/mazmorras/App.class
+com/mazmorras/controller/GameLogicController.class
+com/mazmorras/model/EscenarioObserver.class
+com/mazmorras/controller/JuegoControlador.class
+com/mazmorras/model/Celda.class
+com/mazmorras/model/SistemaCombate.class
+module-info.class
+com/mazmorras/model/Escenario.class
+com/mazmorras/model/GestorTurnos.class
+com/mazmorras/model/Personaje.class
