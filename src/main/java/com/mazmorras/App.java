@@ -1,5 +1,9 @@
 package com.mazmorras;
 
+import java.io.IOException;
+
+import com.mazmorras.controller.JuegoControlador;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +11,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
+     public static void main(String[] args) throws IOException {
+        // Inicializar el juego o controlador principal
+        JuegoControlador juego = new JuegoControlador();
+        juego.iniciarJuego();
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
@@ -27,12 +37,4 @@ public class App extends Application {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            launch(args);
-        } catch (Exception e) {
-            System.err.println("Error fatal en la aplicación:");
-            e.printStackTrace();
-        }
-    }
 }

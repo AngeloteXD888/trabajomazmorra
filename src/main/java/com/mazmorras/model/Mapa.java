@@ -49,16 +49,29 @@ public class Mapa {
     }
 
     private void cargarMapaDesdeArchivo(String rutaArchivo) throws IOException {
+        if (rutaArchivo == null || rutaArchivo.isEmpty()) {
+            throw new IOException("La ruta del archivo es nula o vacía.");
+        }
+    
         try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
             String linea;
             int y = 0;
-            
+    
             // Leer dimensiones del mapa
             String[] dimensiones = br.readLine().split(",");
-            ancho = Integer.parseInt(dimensiones[0]);
-            alto = Integer.parseInt(dimensiones[1]);
+            if (dimensiones.length != 2) {
+                throw new IOException("El formato del archivo de mapa es incorrecto.");
+            }
+    
+            try {
+                ancho = Integer.parseInt(dimensiones[0].trim());
+                alto = Integer.parseInt(dimensiones[1].trim());
+            } catch (NumberFormatException e) {
+                throw new IOException("Las dimensiones del mapa no son números válidos.");
+            }
+    
             celdas = new Celda[alto][ancho];
-            
+    
             // Leer celdas
             while ((linea = br.readLine()) != null && y < alto) {
                 String[] valores = linea.split(",");
@@ -68,8 +81,17 @@ public class Mapa {
                 }
                 y++;
             }
+    
+            // Validar que el mapa esté completamente cargado
+            if (y < alto) {
+                throw new IOException("El archivo de mapa está incompleto.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al cargar el mapa desde el archivo: " + e.getMessage());
+            throw e; // Re-lanza la excepción para que el controlador la gestione.
         }
     }
+    
 
     public Celda getCelda(int x, int y) {
         if (x >= 0 && x < ancho && y >= 0 && y < alto) {
