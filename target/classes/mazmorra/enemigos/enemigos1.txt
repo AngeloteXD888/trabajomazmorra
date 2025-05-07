@@ -1,0 +1,32 @@
+[Goblin]
+nombre=Goblin
+salud=30
+ataque=8
+defensa=3
+velocidad=4
+experiencia=15
+imagen=goblin.png
+descripcion=Un pequeño humanoide verde que ataca en grupos
+habilidades=mordisco,golpe_sucio
+
+[Esqueleto]
+nombre=Esqueleto
+salud=25
+ataque=10
+defensa=5
+velocidad=3
+experiencia=20
+imagen=esqueleto.png
+descripcion=Restos animados de un antiguo guerrero
+habilidades=golpe_espada,resistencia_no_muerta
+
+[Orco]
+nombre=Orco
+salud=50
+ataque=15
+defensa=8
+velocidad=2
+experiencia=30
+imagen=orco.png
+descripcion=Humanoide grande y musculoso con colmillos
+habilidades=embestida,resistencia_fisica
