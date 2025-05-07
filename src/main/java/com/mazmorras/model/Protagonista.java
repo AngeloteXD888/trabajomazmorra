@@ -3,10 +3,12 @@ package com.mazmorras.model;
 public class Protagonista extends Personaje {
     private String nombre;
     private int fuerza;
+    private int saludMaxima;
 
     public Protagonista(String nombre, int salud, int velocidad, int fuerza) {
         this.nombre = nombre;
         this.salud = salud;
+        this.saludMaxima = salud;
         this.velocidad = velocidad;
         this.fuerza = fuerza;
     }
@@ -25,32 +27,27 @@ public class Protagonista extends Personaje {
     }
 
     @Override
-    protected int getY() {
-        return fuerza;
-    }
-
-    public int getX() {
-        return fuerza;
+    public int getY() {
+        return y; // Devuelve la coordenada Y, no la fuerza
     }
 
     @Override
-protected void setPosicion(int nuevoX, int nuevoY) {
-    // 1. Validar que las nuevas coordenadas sean diferentes
-    if (this.x == nuevoX && this.y == nuevoY) {
-        return;
+    public int getX() {
+        return x; // Devuelve la coordenada X, no la fuerza
     }
-    // 2. Actualizar las coordenadas del personaje
-    this.x = nuevoX;
-    this.y = nuevoY;
-}
 
-public String getSalud() {
-    Object saludMaxima = null;
-    return String.format("Salud: %d/%d", salud, saludMaxima);
-}
+    @Override
+    protected void setPosicion(int nuevoX, int nuevoY) {
+        this.x = nuevoX;
+        this.y = nuevoY;
+    }
 
-@Override
-public String getNombre() {
-    return nombre != null ? nombre : "Sin nombre";
-}
+    public String getSalud() {
+        return String.format("Salud: %d/%d", salud, saludMaxima);
+    }
+
+    @Override
+    public String getNombre() {
+        return nombre != null ? nombre : "Sin nombre";
+    }
 }
