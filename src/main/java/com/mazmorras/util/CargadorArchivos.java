@@ -28,7 +28,7 @@ public class CargadorArchivos {
         int ancho = lineas.get(0).length();
         int alto = lineas.size();
         Casilla[][] mapa = new Casilla[ancho][alto];
-        
+         
         for (int y = 0; y < alto; y++) {
             String linea = lineas.get(y);
             // Validar que todas las líneas tengan el mismo ancho
