@@ -2,6 +2,8 @@ package com.mazmorras.controller;
 
 import java.io.IOException;
 
+import com.mazmorras.model.Mapa;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +25,17 @@ public class GameLogicController {
             currentStage.setScene(secondaryScene);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private Mapa mapa;
+    
+    public void MainController() {
+        try {
+            mapa = new Mapa("resources/mapas/nivel1.txt");
+        } catch (IOException e) {
+            System.out.println("Usando mapa por defecto");
+            mapa = new Mapa(15, 10);
         }
     }
 }

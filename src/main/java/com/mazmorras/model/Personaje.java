@@ -23,4 +23,10 @@ public abstract class Personaje implements Cloneable {
             throw new AssertionError("La clase Personaje debería ser Cloneable", e);
         }
     }
+
+    protected abstract int getX();
+
+    protected abstract void setPosicion(int nuevoX, int nuevoY);
+
+    public abstract String getNombre();
 }

@@ -1,139 +1,233 @@
 package com.mazmorras.model;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Escenario {
-    private int[][] matriz;
+    private Celda[][] celdas;
     private List<Personaje> personajes;
+    private Protagonista protagonista;
+    private Random random;
+    private int ancho;
+    private int alto;
 
-    public Escenario(String rutaArchivo) {
-        cargarEscenarioDesdeArchivo(rutaArchivo);
-        personajes = new ArrayList<>();
+    public Escenario() {
+        this.personajes = new ArrayList<>();
+        this.random = new Random();
     }
-    private void cargarEscenarioDesdeArchivo(String ruta) {
-        List<String> lineas = new ArrayList<>();
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+
+    public void cargarMapa(String rutaArchivo) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
+            List<String> lineas = new ArrayList<>();
             String linea;
+
+            // Leer todas las líneas
             while ((linea = br.readLine()) != null) {
-                // Ignorar líneas vacías y comentarios
-                if (!linea.trim().isEmpty() && !linea.trim().startsWith("#")) {
-                    lineas.add(linea);
-                }
+                lineas.add(linea.trim());
             }
-            
-            if (lineas.isEmpty()) {
-                throw new IllegalArgumentException("El archivo está vacío o no contiene datos válidos");
-            }
-            
-            int filas = lineas.size();
-            int columnas = lineas.get(0).length();
-            
-            // Validar que todas las líneas tengan el mismo ancho
-            for (String l : lineas) {
-                if (l.length() != columnas) {
-                    throw new IllegalArgumentException("El mapa no es uniforme - todas las filas deben tener el mismo ancho");
-                }
-            }
-            
-            // Crear la matriz
-            matriz = new int[filas][columnas];
-            
-            // Procesar cada carácter
-            for (int i = 0; i < filas; i++) {
-                for (int j = 0; j < columnas; j++) {
-                    char c = lineas.get(i).charAt(j);
-                    matriz[i][j] = parsearCaracter(c);
-                }
-            }
-            
-        } catch (IOException e) {
-            System.err.println("Error al leer el archivo: " + e.getMessage());
-            // Cargar mapa por defecto en caso de error
-            cargarMapaPorDefecto();
-        }
-    }
-    
-    private int parsearCaracter(char c) {
-        switch (c) {
-            case '#': return 1;  // Pared
-            case '.': return 0;  // Suelo
-            case 'P': return 2;  // Punto de inicio del jugador
-            case 'E': return 3;  // Enemigo
-            case 'S': return 4;  // Salida
-            case 'T': return 5;  // Tesoro
-            default: 
-                System.err.println("Carácter desconocido en el mapa: '" + c + "'. Usando suelo como predeterminado.");
-                return 0;
-        }
-    }
-    
-    private void cargarMapaPorDefecto() {
-        System.out.println("Cargando mapa por defecto...");
-        // Mapa simple 10x10 con bordes de paredes
-        matriz = new int[10][10];
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (i == 0 || i == 9 || j == 0 || j == 9) {
-                    matriz[i][j] = 1; // Paredes en los bordes
-                } else {
-                    matriz[i][j] = 0; // Suelo en el centro
+
+            // Inicializar matriz de celdas
+            this.alto = lineas.size();
+            this.ancho = lineas.get(0).split(",").length;
+            this.celdas = new Celda[alto][ancho];
+
+            // Procesar cada celda
+            for (int y = 0; y < alto; y++) {
+                String[] valores = lineas.get(y).split(",");
+                for (int x = 0; x < ancho; x++) {
+                    boolean esPared = valores[x].trim().equals("1");
+                    celdas[y][x] = new Celda(esPared);
                 }
             }
         }
-        matriz[1][1] = 2; // Posición inicial del jugador
     }
 
-    public boolean esPared(int x, int y) {
-        return matriz[y][x] == 1; // 1 = pared, 0 = suelo
-    }
+    public void cargarEnemigos(String rutaArchivo) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
+            String linea;
+            boolean primeraLinea = true; // Saltar cabecera
 
-    public void agregarPersonaje(Personaje p) {
-        personajes.add(p);
-    }
+            while ((linea = br.readLine()) != null) {
+                if (primeraLinea) {
+                    primeraLinea = false;
+                    continue;
+                }
 
-   public Map<String, Object> getMapa() {
-    Map<String, Object> mapaCompleto = new HashMap<>();
-    
-    // 1. Matriz básica del escenario
-    mapaCompleto.put("matriz", this.matriz);
-    
-    // 2. Posiciones de personajes
-    Map<String, int[]> posiciones = new HashMap<>();
-    for (Personaje p : personajes) {
-        String clave = (p instanceof Protagonista) ? "protagonista" : "enemigo_" + personajes.indexOf(p);
-        posiciones.put(clave, new int[]{p.getY(), p.getY()});
-    }
-    mapaCompleto.put("personajes", posiciones);
-    
-    // 3. Metadatos adicionales
-    mapaCompleto.put("ancho", matriz[0].length);
-    mapaCompleto.put("alto", matriz.length);
-    
-    return mapaCompleto;
-}
-   
-public boolean esPosicionValida(int i, int j) {
-    return i >= 0 && i < matriz.length && j >= 0 && j < matriz[0].length && matriz[i][j] != 1;
-}
+                String[] datos = linea.split(",");
+                if (datos.length >= 5) {
+                    int x = Integer.parseInt(datos[0].trim());
+                    int y = Integer.parseInt(datos[1].trim());
+                    int salud = Integer.parseInt(datos[2].trim());
+                    int velocidad = Integer.parseInt(datos[3].trim());
+                    int percepcion = Integer.parseInt(datos[4].trim());
 
-public Personaje getPersonajeEn(int i, int j) {
-    for (Personaje p : personajes) {
-        if (p.getY() == i && p.getY() == j) {
-            return p;
+                    if (esPosicionValida(x, y)) {
+                        Enemigo enemigo = new Enemigo(x, y, salud, velocidad, percepcion);
+                        celdas[y][x].agregarPersonaje(enemigo);
+                        personajes.add(enemigo);
+                    }
+                }
+            }
         }
     }
-    return null;
-}
 
-public void removerPersonaje(Enemigo enemigo) {
-    personajes.remove(enemigo);
-}
+    /**
+     * Genera un mapa básico si falla la carga de archivos
+     */
+    public void generarEscenarioBasico() {
+        this.ancho = 10;
+        this.alto = 8;
+        this.celdas = new Celda[alto][ancho];
 
+        // Bordes como paredes, interior libre
+        for (int y = 0; y < alto; y++) {
+            for (int x = 0; x < ancho; x++) {
+                boolean esPared = (x == 0 || y == 0 || x == ancho - 1 || y == alto - 1);
+                celdas[y][x] = new Celda(esPared);
+            }
+        }
 
+        // Asegurar posición inicial accesible
+        celdas[1][1] = new Celda(false);
+
+        // Añadir un enemigo básico
+        Enemigo enemigo = new Enemigo(5, 4, 20, 3, 5);
+        celdas[4][5].agregarPersonaje(enemigo);
+        personajes.add(enemigo);
+    }
+
+    public boolean moverPersonaje(Personaje personaje, int dx, int dy) {
+        int nuevoX = personaje.getX() + dx;
+        int nuevoY = personaje.getY() + dy;
+
+        if (!esPosicionValida(nuevoX, nuevoY)) {
+            return false;
+        }
+
+        Celda celdaDestino = celdas[nuevoY][nuevoX];
+        if (celdaDestino.tienePersonaje()) {
+            personaje.atacar(celdaDestino.getPersonaje());
+            return true;
+        }
+
+        // Mover personaje
+        celdas[personaje.getY()][personaje.getX()].removerPersonaje();
+        personaje.setPosicion(nuevoX, nuevoY);
+        celdaDestino.agregarPersonaje(personaje);
+
+        return true;
+    }
+
+    /**
+     * Verifica si una posición es válida para movimiento
+     */
+    public boolean esPosicionValida(int x, int y) {
+        return x >= 0 && x < ancho && y >= 0 && y < alto && !celdas[y][x].esPared();
+    }
+
+    /**
+     * Obtiene el personaje en una posición específica
+     */
+    public Personaje getPersonajeEn(int x, int y) {
+        if (x >= 0 && x < ancho && y >= 0 && y < alto) {
+            return celdas[y][x].getPersonaje();
+        }
+        return null;
+    }
+
+    // Getters y setters
+    public Celda[][] getMapa() {
+        return celdas;
+    }
+
+    public int getAncho() {
+        return ancho;
+    }
+
+    public int getAlto() {
+        return alto;
+    }
+
+    public List<Personaje> getTodosPersonajes() {
+        List<Personaje> todos = new ArrayList<>(personajes);
+        if (protagonista != null) {
+            todos.add(protagonista);
+        }
+        return todos;
+    }
+
+    public Protagonista getProtagonista() {
+        return protagonista;
+    }
+
+    public void setProtagonista(Protagonista protagonista) {
+        this.protagonista = protagonista;
+        if (esPosicionValida(protagonista.getX(), protagonista.getY())) {
+            celdas[protagonista.getY()][protagonista.getX()].agregarPersonaje(protagonista);
+        }
+    }
+
+    /**
+     * Elimina un personaje del escenario
+     */
+    public void eliminarPersonaje(Personaje personaje) {
+        personajes.remove(personaje);
+        celdas[personaje.getY()][personaje.getX()].removerPersonaje();
+    }
+
+    public boolean esPared(int i, int j) {
+        // Verificar que las coordenadas estén dentro de los límites del mapa
+        if (i < 0 || i >= ancho || j < 0 || j >= alto) {
+            return true; // Considerar posiciones fuera del mapa como paredes
+        }
+
+        // Verificar si la celda existe y es una pared
+        Celda celda = celdas[j][i]; // Nota: [fila][columna] -> [y][x]
+        return celda != null && celda.esPared();
+    }
+
+    public void removerPersonaje(Enemigo enemigo) {
+        // 1. Verificar que el enemigo existe y está en el escenario
+        if (enemigo == null || !personajes.contains(enemigo)) {
+            return;
+        }
+
+        // 2. Remover de la celda actual
+        int x = enemigo.getX();
+        int y = enemigo.getY();
+
+        if (x >= 0 && x < ancho && y >= 0 && y < alto) {
+            celdas[y][x].removerPersonaje();
+        }
+
+        personajes.remove(enemigo);
+
+        notificarObservadores();
+    }
+
+    private final List<EscenarioObserver> observadores = new CopyOnWriteArrayList<>();
+
+    private void notificarObservadores() {
+        if (observadores.isEmpty()) {
+            return;
+        }
+
+        for (EscenarioObserver observador : observadores) {
+            try {
+                if (observador != null) {
+                    observador.onEscenarioCambiado(this);
+                }
+            } catch (Exception e) {
+                System.err.println(
+                        "Error notificando a " + observador.getClass().getSimpleName() + ": " + e.getMessage());
+
+                e.printStackTrace();
+            }
+        }
+    }
 }
