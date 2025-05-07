@@ -28,4 +28,29 @@ public class Protagonista extends Personaje {
     protected int getY() {
         return fuerza;
     }
+
+    public int getX() {
+        return fuerza;
+    }
+
+    @Override
+protected void setPosicion(int nuevoX, int nuevoY) {
+    // 1. Validar que las nuevas coordenadas sean diferentes
+    if (this.x == nuevoX && this.y == nuevoY) {
+        return;
+    }
+    // 2. Actualizar las coordenadas del personaje
+    this.x = nuevoX;
+    this.y = nuevoY;
+}
+
+public String getSalud() {
+    Object saludMaxima = null;
+    return String.format("Salud: %d/%d", salud, saludMaxima);
+}
+
+@Override
+public String getNombre() {
+    return nombre != null ? nombre : "Sin nombre";
+}
 }
