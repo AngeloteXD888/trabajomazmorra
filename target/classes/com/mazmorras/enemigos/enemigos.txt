@@ -1,2 +1,0 @@
-x,y,salud,velocidad,percepcion
-2,2,20,3,5
