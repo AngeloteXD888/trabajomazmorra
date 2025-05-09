@@ -4,8 +4,6 @@ package com.mazmorras.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import modelo.Personaje;
-
 public class Enemigo extends Personaje {
     private int experiencia;
     private String imagen;

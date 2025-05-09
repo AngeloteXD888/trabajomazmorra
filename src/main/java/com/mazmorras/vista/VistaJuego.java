@@ -4,6 +4,7 @@ import com.mazmorras.modelo.Casilla;
 import com.mazmorras.modelo.Enemigo;
 import com.mazmorras.modelo.Jugador;
 import com.mazmorras.modelo.ModeloJuego;
+import com.mazmorras.modelo.Personaje;
 import com.mazmorras.modelo.Posicion;
 import com.mazmorras.util.Observador;
 
@@ -16,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import modelo.Personaje;
 
 public class VistaJuego implements Observador {
     @FXML private BorderPane raiz;

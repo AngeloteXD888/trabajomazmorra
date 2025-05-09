@@ -7,8 +7,6 @@ import java.util.Random;
 import com.mazmorras.util.CargadorArchivos;
 import com.mazmorras.util.Observable;
 
-import modelo.Personaje;
-
 public class ModeloJuego extends Observable {
     private Casilla[][] mapa;
     private Jugador jugador;
